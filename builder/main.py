@@ -144,7 +144,9 @@ if "arduino" in env.subst("$PIOFRAMEWORK"):
         _upload_tool = "maple_upload"
         _usbids = env.BoardConfig().get("build.hwids")
         _upload_flags = ["2", "%s:%s" % (_usbids[0][0][2:], _usbids[0][1][2:])]
-
+        if env.subst("$UPLOAD_FLAGS") == "1":
+            _upload_flags[0] = "1"
+            env.Replace(UPLOAD_FLAGS=None)
     env.Replace(
         UPLOADER=_upload_tool,
         UPLOADERFLAGS=["$UPLOAD_PORT"] + _upload_flags,
